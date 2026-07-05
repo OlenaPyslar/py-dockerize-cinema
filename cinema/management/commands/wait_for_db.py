@@ -1,5 +1,6 @@
 import time
 from django.core.management.base import BaseCommand
+from django.db.utils import OperationalError
 import django.db
 
 
@@ -14,10 +15,12 @@ class Command(BaseCommand):
                 django.db.connection.ensure_connection()
                 self.stdout.write(self.style.SUCCESS("Database is available!"))
                 return
-            except Exception:
+            except OperationalError:
                 retry_count += 1
-                self.stdout.write(f"Waiting for database... ({retry_count}/{max_retries})")
+                self.stdout.write(f"Waiting for database... "
+                                  f"({retry_count}/{max_retries})")
                 time.sleep(1)
 
-        self.stdout.write(self.style.ERROR("Database is not available after max retries"))
+        self.stdout.write(self.style.ERROR(
+            "Database is not available after max retries"))
         raise Exception("Database connection failed")
