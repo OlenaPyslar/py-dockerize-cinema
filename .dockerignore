@@ -1,0 +1,10 @@
+.github
+.flake8
+.gitignore
+venv
+Dockerfile
+docker-compose.yaml
+__pycache__/
+.pytest_cache/
+*.pyc
+db.sqlite3
