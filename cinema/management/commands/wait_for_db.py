@@ -17,5 +17,5 @@ class Command(BaseCommand):
                 retry_count += 1
                 self.stdout.write(f"Waiting for database... ({retry_count}/{max_retries})")
                 time.sleep(1)
-            self.stdout.write(self.style.ERROR("Database is not available after max retries"))
-            raise Exception("Database connection failed")
+        self.stdout.write(self.style.ERROR("Database is not available after max retries"))
+        raise Exception("Database connection failed")
